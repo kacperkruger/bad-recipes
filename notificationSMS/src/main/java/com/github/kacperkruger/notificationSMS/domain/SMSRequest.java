@@ -2,9 +2,12 @@ package com.github.kacperkruger.notificationSMS.domain;
 
 public class SMSRequest {
 
-    private final String phoneNumber;
+    private String phoneNumber;
 
-    private final String message;
+    private String message;
+
+    public SMSRequest() {
+    }
 
     public SMSRequest(String phoneNumber, String message) {
         this.phoneNumber = phoneNumber;
@@ -15,7 +18,15 @@ public class SMSRequest {
         return phoneNumber;
     }
 
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     public String getMessage() {
         return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

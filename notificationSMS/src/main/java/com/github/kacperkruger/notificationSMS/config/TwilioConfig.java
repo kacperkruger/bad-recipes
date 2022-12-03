@@ -9,24 +9,24 @@ import org.springframework.context.annotation.Configuration;
 public class TwilioConfig {
 
     @Value("${twilio.account_sid}")
-    private String accountSid;
+    private String ACCOUNT_SID;
 
     @Value("${twilio.auth_token}")
-    private String authToken;
+    private String AUTH_TOKEN;
 
     @Value("${twilio.phone_number}")
-    private String twilioPhoneNumber;
+    private String TWILIO_PHONE_NUMBER;
 
     @Bean
     public void twilioInitializer() {
         Twilio.init(
-                accountSid,
-                authToken
+                ACCOUNT_SID,
+                AUTH_TOKEN
         );
     }
 
     @Bean
     public String twilioPhoneNumber() {
-        return twilioPhoneNumber;
+        return TWILIO_PHONE_NUMBER;
     }
 }
