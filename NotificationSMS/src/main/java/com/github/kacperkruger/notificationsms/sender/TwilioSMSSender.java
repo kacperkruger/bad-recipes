@@ -5,7 +5,7 @@ import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("twilio")
 public class TwilioSMSSender implements SMSSender {
 
     private final String twilioPhoneNumber;

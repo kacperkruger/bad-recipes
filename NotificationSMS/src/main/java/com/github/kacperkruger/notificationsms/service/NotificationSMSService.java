@@ -4,6 +4,7 @@ import com.github.kacperkruger.notificationsms.domain.SMSRequest;
 import com.github.kacperkruger.notificationsms.sender.SMSSender;
 import com.github.kacperkruger.notificationsms.service.error.InvalidMessage;
 import com.github.kacperkruger.notificationsms.service.error.InvalidPhoneNumber;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.regex.Pattern;
@@ -15,7 +16,7 @@ public class NotificationSMSService {
 
     private final SMSSender smsSender;
 
-    public NotificationSMSService(SMSSender smsSender) {
+    public NotificationSMSService(@Qualifier("twilio") SMSSender smsSender) {
         this.smsSender = smsSender;
     }
 
