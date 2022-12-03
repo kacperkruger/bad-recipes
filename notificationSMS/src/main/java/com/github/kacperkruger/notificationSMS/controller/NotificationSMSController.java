@@ -1,9 +1,9 @@
-package com.github.kacperkruger.notificationsms.controller;
+package com.github.kacperkruger.notificationSMS.controller;
 
-import com.github.kacperkruger.notificationsms.domain.SMSRequest;
-import com.github.kacperkruger.notificationsms.service.NotificationSMSService;
-import com.github.kacperkruger.notificationsms.service.error.InvalidMessageException;
-import com.github.kacperkruger.notificationsms.service.error.InvalidPhoneNumberException;
+import com.github.kacperkruger.notificationSMS.service.NotificationSMSService;
+import com.github.kacperkruger.notificationSMS.service.error.InvalidMessageException;
+import com.github.kacperkruger.notificationSMS.domain.SMSRequest;
+import com.github.kacperkruger.notificationSMS.service.error.InvalidPhoneNumberException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

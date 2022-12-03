@@ -1,4 +1,4 @@
-package com.github.kacperkruger.notificationsms.config;
+package com.github.kacperkruger.notificationSMS.config;
 
 import com.twilio.Twilio;
 import org.springframework.beans.factory.annotation.Value;

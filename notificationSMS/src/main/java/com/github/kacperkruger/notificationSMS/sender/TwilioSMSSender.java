@@ -1,6 +1,6 @@
-package com.github.kacperkruger.notificationsms.sender;
+package com.github.kacperkruger.notificationSMS.sender;
 
-import com.github.kacperkruger.notificationsms.domain.SMSRequest;
+import com.github.kacperkruger.notificationSMS.domain.SMSRequest;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 import org.springframework.stereotype.Service;

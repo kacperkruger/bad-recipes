@@ -1,9 +1,10 @@
 package com.github.kacperkruger.notificationsms.service;
 
-import com.github.kacperkruger.notificationsms.domain.SMSRequest;
-import com.github.kacperkruger.notificationsms.sender.SMSSender;
-import com.github.kacperkruger.notificationsms.service.error.InvalidMessageException;
-import com.github.kacperkruger.notificationsms.service.error.InvalidPhoneNumberException;
+import com.github.kacperkruger.notificationSMS.domain.SMSRequest;
+import com.github.kacperkruger.notificationSMS.sender.SMSSender;
+import com.github.kacperkruger.notificationSMS.service.NotificationSMSService;
+import com.github.kacperkruger.notificationSMS.service.error.InvalidMessageException;
+import com.github.kacperkruger.notificationSMS.service.error.InvalidPhoneNumberException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;

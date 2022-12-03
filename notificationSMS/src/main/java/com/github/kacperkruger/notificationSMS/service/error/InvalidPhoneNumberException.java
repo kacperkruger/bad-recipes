@@ -1,4 +1,4 @@
-package com.github.kacperkruger.notificationsms.service.error;
+package com.github.kacperkruger.notificationSMS.service.error;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

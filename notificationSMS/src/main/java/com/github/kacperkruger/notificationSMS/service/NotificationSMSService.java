@@ -1,9 +1,9 @@
-package com.github.kacperkruger.notificationsms.service;
+package com.github.kacperkruger.notificationSMS.service;
 
-import com.github.kacperkruger.notificationsms.domain.SMSRequest;
-import com.github.kacperkruger.notificationsms.sender.SMSSender;
-import com.github.kacperkruger.notificationsms.service.error.InvalidMessageException;
-import com.github.kacperkruger.notificationsms.service.error.InvalidPhoneNumberException;
+import com.github.kacperkruger.notificationSMS.domain.SMSRequest;
+import com.github.kacperkruger.notificationSMS.sender.SMSSender;
+import com.github.kacperkruger.notificationSMS.service.error.InvalidMessageException;
+import com.github.kacperkruger.notificationSMS.service.error.InvalidPhoneNumberException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
