@@ -32,6 +32,13 @@ public class Notification {
         this.notificationType = notificationType;
     }
 
+    public Notification(String to, String subject, LocalDateTime dateOfSend, NotificationType notificationType) {
+        this.to = to;
+        this.subject = subject;
+        this.dateOfSend = dateOfSend;
+        this.notificationType = notificationType;
+    }
+
     public Long getId() {
         return id;
     }
