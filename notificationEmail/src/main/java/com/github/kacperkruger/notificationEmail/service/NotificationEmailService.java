@@ -1,16 +1,18 @@
 package com.github.kacperkruger.notificationEmail.service;
 
 import com.github.kacperkruger.notificationEmail.domain.EmailRequest;
+import com.github.kacperkruger.notificationEmail.service.error.InvalidFormEmailException;
+import com.github.kacperkruger.notificationEmail.service.error.InvalidMessageException;
+import com.github.kacperkruger.notificationEmail.service.error.InvalidSubjectException;
+import com.github.kacperkruger.notificationEmail.service.error.InvalidToEmailException;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
-import java.util.regex.Pattern;
 
 @Service
 public class NotificationEmailService {
-
-    private final Pattern EMAIL_PATTERN = Pattern.compile("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\\\.[A-Za-z0-9-]+)*(\\\\.[A-Za-z]{2,})$");
 
     private final MailSender mailSender;
 
@@ -18,7 +20,7 @@ public class NotificationEmailService {
         this.mailSender = mailSender;
     }
 
-    public void validateAndSend(EmailRequest emailRequest) {
+    public void validateAndSend(EmailRequest emailRequest) throws InvalidSubjectException, InvalidMessageException, InvalidFormEmailException, InvalidToEmailException {
         validateEmailRequest(emailRequest);
 
         SimpleMailMessage mailMessage = new SimpleMailMessage();
@@ -30,14 +32,14 @@ public class NotificationEmailService {
         mailSender.send(mailMessage);
     }
 
-    public void validateEmailRequest(EmailRequest emailRequest) {
-        if (isNotCorrectEmail(emailRequest.getFromEmail())) throw new IllegalStateException();
-        if (isNotCorrectEmail(emailRequest.getToEmail())) throw new IllegalStateException();
-        if (emailRequest.getSubject().isEmpty()) throw new IllegalStateException();
-        if (emailRequest.getMessage().isEmpty()) throw new IllegalStateException();
+    public void validateEmailRequest(EmailRequest emailRequest) throws InvalidFormEmailException, InvalidToEmailException, InvalidSubjectException, InvalidMessageException {
+        if (isNotCorrectEmailAddress(emailRequest.getFromEmail())) throw new InvalidFormEmailException();
+        if (isNotCorrectEmailAddress(emailRequest.getToEmail())) throw new InvalidToEmailException();
+        if (emailRequest.getSubject().isEmpty()) throw new InvalidSubjectException();
+        if (emailRequest.getMessage().isEmpty()) throw new InvalidMessageException();
     }
 
-    public boolean isNotCorrectEmail(String email) {
-        return !EMAIL_PATTERN.matcher(email).matches();
+    public boolean isNotCorrectEmailAddress(String emailAddress) {
+        return !EmailValidator.getInstance().isValid(emailAddress);
     }
 }
