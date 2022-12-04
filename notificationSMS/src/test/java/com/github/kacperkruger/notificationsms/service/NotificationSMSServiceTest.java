@@ -27,75 +27,77 @@ class NotificationSMSServiceTest {
     }
 
     @Test
-    void validateAndSendShouldThrowInvalidPhoneNumberExceptionWhenPhoneNumberInvalid() {
-        SMSRequest invalidSMSRequest = new SMSRequest("123456789", "hello");
-
-        Exception exception = assertThrows(InvalidPhoneNumberException.class, () -> {
-            smsService.validateAndSend(invalidSMSRequest);
-        });
-
-        String expectedMessage = "Invalid phone number";
-
-        assertEquals(expectedMessage, exception.getMessage());
-    }
-
-    @Test
-    void validateAndSendShouldThrowInvalidMessageExceptionWhenPhoneNumberCorrectAndMessageInvalid() {
-        SMSRequest invalidSMSRequest = new SMSRequest("+48123456789", "");
-
-        Exception exception = assertThrows(InvalidMessageException.class, () -> {
-            smsService.validateAndSend(invalidSMSRequest);
-        });
-
-        String expectedMessage = "Message must not be empty";
-
-        assertEquals(expectedMessage, exception.getMessage());
-    }
-
-    @Test
-    void validatePhoneNumberShouldCallSMSSenderSendMethodWhenPhoneNumberAndMessageCorrect() throws InvalidMessageException, InvalidPhoneNumberException {
+    void validateAndSendShouldCallSMSSenderSendMethodWhenPhoneNumberAndMessageCorrect() throws InvalidMessageException, InvalidPhoneNumberException {
         SMSRequest correctSMSRequest = new SMSRequest("+48123456789", "Hello World!");
-
         smsService.validateAndSend(correctSMSRequest);
-
         verify(smsSender, times(1)).send(correctSMSRequest);
     }
 
     @Test
-    void validatePhoneNumberShouldReturnTrueWhenPhoneNumberCorrect() {
+    void validateSMSRequestShouldThrowInvalidPhoneNumberExceptionWhenPhoneNumberInvalid() {
+        SMSRequest invalidSMSRequest = new SMSRequest("123456789", "hello");
+
+        Exception exception = assertThrows(InvalidPhoneNumberException.class, () -> {
+            smsService.validateSMSRequest(invalidSMSRequest);
+        });
+
+        String expectedMessage = "Invalid phone number";
+        assertEquals(expectedMessage, exception.getMessage());
+    }
+
+    @Test
+    void validateSMSRequestShouldThrowInvalidMessageExceptionWhenPhoneNumberCorrectAndMessageInvalid() {
+        SMSRequest invalidSMSRequest = new SMSRequest("+48123456789", "");
+
+        Exception exception = assertThrows(InvalidMessageException.class, () -> {
+            smsService.validateSMSRequest(invalidSMSRequest);
+        });
+
+        String expectedMessage = "Message must not be empty";
+        assertEquals(expectedMessage, exception.getMessage());
+    }
+
+    @Test
+    void validateSMSRequestShouldPassWhenPhoneNumberAndMessageCorrect() throws InvalidMessageException, InvalidPhoneNumberException {
+        SMSRequest correctSMSRequest = new SMSRequest("+48123456789", "Hello World!");
+        smsService.validateSMSRequest(correctSMSRequest);
+    }
+
+    @Test
+    void isPhoneNumberCorrectShouldReturnTrueWhenPhoneNumberCorrect() {
         String correctPhoneNumber = "+48123456789";
-        assertTrue(smsService.validatePhoneNumber(correctPhoneNumber));
+        assertTrue(smsService.isPhoneNumberCorrect(correctPhoneNumber));
     }
 
     @Test
-    void validatePhoneNumberShouldReturnFalseWhenPhoneNumberIsEmpty() {
-        assertFalse(smsService.validatePhoneNumber(""));
+    void isPhoneNumberCorrectShouldReturnFalseWhenPhoneNumberIsEmpty() {
+        assertFalse(smsService.isPhoneNumberCorrect(""));
     }
 
     @Test
-    void validatePhoneNumberShouldReturnFalseWhenPhoneNumberDoesNotContainsDiallingCode() {
+    void isPhoneNumberCorrectShouldReturnFalseWhenPhoneNumberDoesNotContainsDiallingCode() {
         String phoneNumberWithoutDiallingCode = "123456789";
-        assertFalse(smsService.validatePhoneNumber(phoneNumberWithoutDiallingCode));
+        assertFalse(smsService.isPhoneNumberCorrect(phoneNumberWithoutDiallingCode));
     }
 
     @Test
-    void validatePhoneNumberShouldReturnFalseWhenPhoneNumberInvalidLength() {
+    void isPhoneNumberCorrectShouldReturnFalseWhenPhoneNumberInvalidLength() {
         String tooShortPhoneNumber = "+4812345678";
         String tooLongPhoneNumber = "+481234567890";
 
-        assertFalse(smsService.validatePhoneNumber(tooShortPhoneNumber));
-        assertFalse(smsService.validatePhoneNumber(tooLongPhoneNumber));
+        assertFalse(smsService.isPhoneNumberCorrect(tooShortPhoneNumber));
+        assertFalse(smsService.isPhoneNumberCorrect(tooLongPhoneNumber));
     }
 
     @Test
-    void validateMessageShouldReturnTrueWhenMessageCorrect() {
+    void isMessageNotEmptyShouldReturnTrueWhenMessageCorrect() {
         String correctMessage = "Hello World!";
-        assertTrue(smsService.validateMessage(correctMessage));
+        assertTrue(smsService.isMessageNotEmpty(correctMessage));
     }
 
     @Test
-    void validateMessageShouldReturnFalseWhenMessageIsBlank() {
+    void isMessageNotEmptyShouldReturnFalseWhenMessageIsBlank() {
         String blankMessage = "";
-        assertFalse(smsService.validateMessage(blankMessage));
+        assertFalse(smsService.isMessageNotEmpty(blankMessage));
     }
 }
