@@ -1,7 +1,7 @@
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation "org.springframework.cloud:spring-cloud-starter-netflix-eureka-client"
 
-    implementation 'com.twilio.sdk:twilio:9.1.4'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
 }
+
