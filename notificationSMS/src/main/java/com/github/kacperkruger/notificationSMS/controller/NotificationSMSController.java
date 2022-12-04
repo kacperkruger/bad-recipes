@@ -1,5 +1,6 @@
 package com.github.kacperkruger.notificationSMS.controller;
 
+import com.github.kacperkruger.clients.notification.NotificationResponse;
 import com.github.kacperkruger.clients.notification.sms.SMSRequest;
 import com.github.kacperkruger.notificationSMS.service.NotificationSMSService;
 import com.github.kacperkruger.notificationSMS.service.error.InvalidMessageException;
@@ -20,7 +21,7 @@ public class NotificationSMSController {
     }
 
     @PostMapping
-    public void sendSMS(@RequestBody SMSRequest smsRequest) throws InvalidPhoneNumberException, InvalidMessageException {
+    public void sendSMS(@RequestBody SMSRequest smsRequest) throws InvalidPhoneNumberException, InvalidMessageException, InterruptedException {
         smsService.validateAndSend(smsRequest);
     }
 }

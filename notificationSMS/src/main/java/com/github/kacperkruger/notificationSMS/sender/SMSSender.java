@@ -4,5 +4,5 @@ import com.github.kacperkruger.clients.notification.sms.SMSRequest;
 
 public interface SMSSender {
 
-    void send(SMSRequest smsRequest);
+    void send(SMSRequest smsRequest) throws InterruptedException;
 }

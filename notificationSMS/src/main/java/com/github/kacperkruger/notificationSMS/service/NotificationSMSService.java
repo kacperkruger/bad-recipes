@@ -1,5 +1,6 @@
 package com.github.kacperkruger.notificationSMS.service;
 
+import com.github.kacperkruger.clients.notification.NotificationResponse;
 import com.github.kacperkruger.clients.notification.sms.SMSRequest;
 import com.github.kacperkruger.notificationSMS.sender.SMSSender;
 import com.github.kacperkruger.notificationSMS.service.error.InvalidMessageException;
@@ -20,7 +21,7 @@ public class NotificationSMSService {
         this.smsSender = smsSender;
     }
 
-    public void validateAndSend(SMSRequest smsRequest) throws InvalidPhoneNumberException, InvalidMessageException {
+    public void validateAndSend(SMSRequest smsRequest) throws InvalidPhoneNumberException, InvalidMessageException, InterruptedException {
         validateSMSRequest(smsRequest);
         smsSender.send(smsRequest);
     }

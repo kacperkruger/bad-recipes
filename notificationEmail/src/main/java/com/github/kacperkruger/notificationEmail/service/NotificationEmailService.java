@@ -6,7 +6,6 @@ import com.github.kacperkruger.notificationEmail.service.error.InvalidMessageExc
 import com.github.kacperkruger.notificationEmail.service.error.InvalidSubjectException;
 import com.github.kacperkruger.notificationEmail.service.error.InvalidToEmailException;
 import org.apache.commons.validator.routines.EmailValidator;
-import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
@@ -30,12 +29,7 @@ public class NotificationEmailService {
         mailMessage.setSubject(emailRequest.getSubject());
         mailMessage.setText(emailRequest.getMessage());
 
-        try {
-            mailSender.send(mailMessage);
-        } catch (MailException exception) {
-            System.out.println(exception.getMessage());
-            return;
-        }
+        mailSender.send(mailMessage);
     }
 
     public void validateEmailRequest(EmailRequest emailRequest) throws InvalidFormEmailException, InvalidToEmailException, InvalidSubjectException, InvalidMessageException {
