@@ -4,4 +4,5 @@ dependencies {
     implementation "org.springframework.cloud:spring-cloud-starter-netflix-eureka-client"
 
     implementation 'com.twilio.sdk:twilio:9.1.4'
+    implementation project(":clients")
 }

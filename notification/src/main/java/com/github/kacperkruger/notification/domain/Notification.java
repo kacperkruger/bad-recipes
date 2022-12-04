@@ -1,5 +1,6 @@
 package com.github.kacperkruger.notification.domain;
 
+import com.github.kacperkruger.clients.notification.NotificationType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;

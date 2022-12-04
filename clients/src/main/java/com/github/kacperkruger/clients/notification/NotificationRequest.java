@@ -1,4 +1,4 @@
-package com.github.kacperkruger.notification.domain;
+package com.github.kacperkruger.clients.notification;
 
 public class NotificationRequest {
 

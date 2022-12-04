@@ -18,4 +18,6 @@ dependencies {
 
     // https://mvnrepository.com/artifact/commons-validator/commons-validator
     implementation 'commons-validator:commons-validator:1.7'
+
+    implementation project(":clients")
 }

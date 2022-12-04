@@ -1,6 +1,6 @@
 package com.github.kacperkruger.notificationSMS.service;
 
-import com.github.kacperkruger.notificationSMS.domain.SMSRequest;
+import com.github.kacperkruger.clients.notification.sms.SMSRequest;
 import com.github.kacperkruger.notificationSMS.sender.SMSSender;
 import com.github.kacperkruger.notificationSMS.service.error.InvalidMessageException;
 import com.github.kacperkruger.notificationSMS.service.error.InvalidPhoneNumberException;

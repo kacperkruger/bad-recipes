@@ -3,4 +3,5 @@ include 'notificationSMS'
 include 'notificationEmail'
 include 'notification'
 include 'eureka-server'
+include 'clients'
 

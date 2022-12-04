@@ -1,9 +1,4 @@
-package com.github.kacperkruger.notificationEmail.domain;
-
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
-
-import java.util.Objects;
+package com.github.kacperkruger.clients.notification.email;
 
 public class EmailRequest {
 

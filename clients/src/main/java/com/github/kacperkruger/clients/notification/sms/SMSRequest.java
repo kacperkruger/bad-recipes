@@ -1,4 +1,4 @@
-package com.github.kacperkruger.notificationSMS.domain;
+package com.github.kacperkruger.clients.notification.sms;
 
 public class SMSRequest {
 

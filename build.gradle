@@ -19,6 +19,10 @@ subprojects {
     group 'com.github.kacperkruger'
     version '1.0'
 
+    dependencies {
+        implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    }
+
     dependencyManagement {
         imports {
             mavenBom "org.springframework.cloud:spring-cloud-dependencies:${findProperty("spring.cloud.version")}"
