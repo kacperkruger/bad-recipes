@@ -21,16 +21,20 @@ public class NotificationSMSService {
     }
 
     public void validateAndSend(SMSRequest smsRequest) throws InvalidPhoneNumberException, InvalidMessageException {
-        if (!validatePhoneNumber(smsRequest.getPhoneNumber())) throw new InvalidPhoneNumberException();
-        if (!validateMessage(smsRequest.getMessage())) throw new InvalidMessageException();
+        validateSMSRequest(smsRequest);
         smsSender.send(smsRequest);
     }
 
-    public boolean validatePhoneNumber(String phoneNumber) {
+    public void validateSMSRequest(SMSRequest smsRequest) throws InvalidPhoneNumberException, InvalidMessageException {
+        if (!isPhoneNumberCorrect(smsRequest.getPhoneNumber())) throw new InvalidPhoneNumberException();
+        if (!isMessageNotEmpty(smsRequest.getMessage())) throw new InvalidMessageException();
+    }
+
+    public boolean isPhoneNumberCorrect(String phoneNumber) {
         return PHONE_PATTERN.matcher(phoneNumber).matches();
     }
 
-    public boolean validateMessage(String message) {
+    public boolean isMessageNotEmpty(String message) {
         return !message.isEmpty();
     }
 }
