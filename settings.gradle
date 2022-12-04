@@ -1,3 +1,4 @@
 rootProject.name = 'recipes'
 include 'notificationSMS'
+include 'notificationEmail'
 
