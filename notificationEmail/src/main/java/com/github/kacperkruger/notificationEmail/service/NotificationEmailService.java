@@ -13,24 +13,24 @@ public class NotificationEmailService {
 
     private final MailSender mailSender;
 
-    public NotificationEmailService(MailSender mailSender) {
+    private final SimpleMailMessage mailMessageTemplate;
+
+    public NotificationEmailService(MailSender mailSender, SimpleMailMessage mailMessageTemplate) {
         this.mailSender = mailSender;
+        this.mailMessageTemplate = mailMessageTemplate;
     }
 
     public void validateAndSend(EmailRequest emailRequest) throws EmailException {
         validateEmailRequest(emailRequest);
 
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setFrom(emailRequest.getFromEmail());
-        mailMessage.setTo(emailRequest.getToEmail());
-        mailMessage.setSubject(emailRequest.getSubject());
-        mailMessage.setText(emailRequest.getMessage());
+        mailMessageTemplate.setTo(emailRequest.getToEmail());
+        mailMessageTemplate.setSubject(emailRequest.getSubject());
+        mailMessageTemplate.setText(emailRequest.getMessage());
 
-        mailSender.send(mailMessage);
+        mailSender.send(mailMessageTemplate);
     }
 
     public void validateEmailRequest(EmailRequest emailRequest) throws EmailException {
-        if (isNotCorrectEmailAddress(emailRequest.getFromEmail())) throw new InvalidFormEmailException();
         if (isNotCorrectEmailAddress(emailRequest.getToEmail())) throw new InvalidToEmailException();
         if (emailRequest.getSubject().isEmpty()) throw new InvalidSubjectException();
         if (emailRequest.getMessage().isEmpty()) throw new InvalidMessageException();

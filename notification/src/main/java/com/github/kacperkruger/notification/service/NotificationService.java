@@ -3,7 +3,7 @@ package com.github.kacperkruger.notification.service;
 import com.github.kacperkruger.clients.notification.domain.NotificationRequest;
 import com.github.kacperkruger.clients.notification.email.domain.EmailRequest;
 import com.github.kacperkruger.clients.notification.email.NotificationEmailClient;
-import com.github.kacperkruger.clients.notification.email.error.EmailException;
+import com.github.kacperkruger.clients.notification.email.error.InvalidEmailRequestException;
 import com.github.kacperkruger.clients.notification.sms.NotificationSMSClient;
 import com.github.kacperkruger.clients.notification.sms.domain.SMSRequest;
 import com.github.kacperkruger.clients.notification.sms.error.InvalidSMSRequestException;
@@ -31,7 +31,7 @@ public class NotificationService {
         this.notificationRepository = notificationRepository;
     }
 
-    public void sendNotification(NotificationRequest notificationRequest) throws Throwable {
+    public void sendNotification(NotificationRequest notificationRequest) {
         Notification parsedNotification = parseNotification(notificationRequest);
 
         switch (notificationRequest.getNotificationType()) {
@@ -55,7 +55,7 @@ public class NotificationService {
                     emailClient.sendMessage(emailRequest);
                     parsedNotification.setStatus(SENT);
                     notificationRepository.save(parsedNotification);
-                } catch (EmailException e) {
+                } catch (InvalidEmailRequestException e) {
                     parsedNotification.setStatus(ERROR);
                     notificationRepository.save(parsedNotification);
                     throw e;

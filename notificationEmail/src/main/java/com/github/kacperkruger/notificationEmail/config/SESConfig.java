@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.aws.mail.simplemail.SimpleEmailServiceMailSender;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.MailMessage;
 import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 
 @Configuration
 public class SESConfig {
@@ -23,6 +25,9 @@ public class SESConfig {
 
     @Value("${aws.region}")
     private String AWS_REGION;
+
+    @Value("${aws.verified.mail.from}")
+    private String AWS_VERIFIED_MAIL_FROM;
 
     @Bean
     public MailSender mailSender(AmazonSimpleEmailService amazonSimpleEmailService) {
@@ -46,6 +51,13 @@ public class SESConfig {
     @Bean
     public BasicAWSCredentials awsCredentials() {
         return new BasicAWSCredentials(AWS_ACCESS_KEY, AWS_SECRET_KEY);
+    }
+
+    @Bean
+    SimpleMailMessage awsMailTemplate() {
+        SimpleMailMessage awsMailTemplate = new SimpleMailMessage();
+        awsMailTemplate.setFrom(AWS_VERIFIED_MAIL_FROM);
+        return awsMailTemplate;
     }
 
 }

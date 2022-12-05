@@ -2,8 +2,6 @@ package com.github.kacperkruger.clients.notification.email.domain;
 
 public class EmailRequest {
 
-    private String fromEmail;
-
     private String toEmail;
 
     private String subject;
@@ -13,19 +11,10 @@ public class EmailRequest {
     public EmailRequest() {
     }
 
-    public EmailRequest(String fromEmail, String toEmail, String subject, String message) {
-        this.fromEmail = fromEmail;
+    public EmailRequest(String toEmail, String subject, String message) {
         this.toEmail = toEmail;
         this.subject = subject;
         this.message = message;
-    }
-
-    public String getFromEmail() {
-        return fromEmail;
-    }
-
-    public void setFromEmail(String fromEmail) {
-        this.fromEmail =fromEmail;
     }
 
     public String getToEmail() {

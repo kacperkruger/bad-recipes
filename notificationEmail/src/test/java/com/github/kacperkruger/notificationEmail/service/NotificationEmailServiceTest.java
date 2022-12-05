@@ -20,21 +20,26 @@ class NotificationEmailServiceTest {
 
     NotificationEmailService emailService;
 
+    SimpleMailMessage mailMessageTemplate;
+
     @BeforeEach
     void setUp() {
         MailSender mockMailSender = mock(MailSender.class);
+        SimpleMailMessage mockMailMessageTemplate = mock(SimpleMailMessage.class);
+        String fromEmailAddress = "test@gmail.com";
+        mockMailMessageTemplate.setFrom(fromEmailAddress);
+        mailMessageTemplate = mockMailMessageTemplate;
         mailSender = mockMailSender;
-        emailService = new NotificationEmailService(mockMailSender);
+        emailService = new NotificationEmailService(mockMailSender, mockMailMessageTemplate);
     }
 
     @Test
     void validateAndSendShouldCallMailSenderMethodSendWhenEmailRequestCorrect() throws EmailException {
-        EmailRequest correctEmailRequest = new EmailRequest("test@gmail.com", "test@gmail.com", "test", "test");
+        EmailRequest correctEmailRequest = new EmailRequest("test@gmail.com", "test", "test");
         SimpleMailMessage correctMailMessage = new SimpleMailMessage();
-        correctMailMessage.setFrom(correctEmailRequest.getFromEmail());
-        correctMailMessage.setTo(correctEmailRequest.getToEmail());
-        correctMailMessage.setSubject(correctEmailRequest.getSubject());
-        correctMailMessage.setText(correctEmailRequest.getMessage());
+        mailMessageTemplate.setTo(correctEmailRequest.getToEmail());
+        mailMessageTemplate.setSubject(correctEmailRequest.getSubject());
+        mailMessageTemplate.setText(correctEmailRequest.getMessage());
 
         emailService.validateAndSend(correctEmailRequest);
 
@@ -43,23 +48,13 @@ class NotificationEmailServiceTest {
 
     @Test
     void validateEmailRequestShouldPassWhenEmailRequestCorrect() throws EmailException {
-        EmailRequest correctEmailRequest = new EmailRequest("test@gmail.com", "test@gmail.com", "test", "test");
+        EmailRequest correctEmailRequest = new EmailRequest("test@gmail.com", "test", "test");
         emailService.validateEmailRequest(correctEmailRequest);
     }
 
     @Test
-    void validateEmailRequestShouldThrowInvalidFormEmailExceptionWhenFromEmailInvalid() {
-        EmailRequest invalidEmailRequest = new EmailRequest("test", "test@gmail.com", "test", "test");
-
-        Exception exception = assertThrows(InvalidFormEmailException.class, () -> emailService.validateEmailRequest(invalidEmailRequest));
-
-        String expectedMessage = "Invalid from email address";
-        assertEquals(expectedMessage, exception.getMessage());
-    }
-
-    @Test
     void validateEmailRequestShouldThrowInvalidToEmailExceptionWhenToEmailNotValidate() {
-        EmailRequest invalidEmailRequest = new EmailRequest("test@gmail.com", "test", "test", "test");
+        EmailRequest invalidEmailRequest = new EmailRequest("test", "test", "test");
 
         Exception exception = assertThrows(InvalidToEmailException.class, () -> emailService.validateEmailRequest(invalidEmailRequest));
 
@@ -68,7 +63,7 @@ class NotificationEmailServiceTest {
     }
     @Test
     void validateEmailRequestShouldThrowInvalidSubjectExceptionWhenSubjectIsEmpty() {
-        EmailRequest invalidEmailRequest = new EmailRequest("test@gmail.com", "test@gmail.com", "", "test");
+        EmailRequest invalidEmailRequest = new EmailRequest("test@gmail.com", "", "test");
 
         Exception exception = assertThrows(InvalidSubjectException.class, () -> emailService.validateEmailRequest(invalidEmailRequest));
 
@@ -77,7 +72,7 @@ class NotificationEmailServiceTest {
     }
     @Test
     void validateEmailRequestShouldThrowInvalidMessageExceptionWhenMessageIsEmpty() {
-        EmailRequest invalidEmailRequest = new EmailRequest("test@gmail.com", "test@gmail.com", "test", "");
+        EmailRequest invalidEmailRequest = new EmailRequest("test@gmail.com", "test", "");
 
         Exception exception = assertThrows(InvalidMessageException.class, () -> emailService.validateEmailRequest(invalidEmailRequest));
 
