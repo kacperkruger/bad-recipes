@@ -1,7 +1,7 @@
 package com.github.kacperkruger.clients.notification.sms.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.kacperkruger.clients.notification.error.ExceptionMessage;
+import com.github.kacperkruger.clients.error.ExceptionMessage;
 import com.github.kacperkruger.clients.notification.sms.error.InvalidSMSRequestException;
 import feign.Response;
 import feign.codec.ErrorDecoder;
@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 
 public class NotificationSMSErrorDecoder implements ErrorDecoder {
 

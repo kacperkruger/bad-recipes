@@ -1,4 +1,4 @@
-package com.github.kacperkruger.clients.notification.error;
+package com.github.kacperkruger.clients.error;
 
 public class ExceptionMessage {
     private String timestamp;
