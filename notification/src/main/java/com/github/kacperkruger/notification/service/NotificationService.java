@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
-import static com.github.kacperkruger.clients.notification.domain.NotificationResponse.ERROR;
-import static com.github.kacperkruger.clients.notification.domain.NotificationResponse.SENT;
+import static com.github.kacperkruger.clients.notification.domain.NotificationStatus.ERROR;
+import static com.github.kacperkruger.clients.notification.domain.NotificationStatus.SENT;
 
 @Service
 public class NotificationService {
@@ -32,7 +32,6 @@ public class NotificationService {
     }
 
     public void sendNotification(NotificationRequest notificationRequest) throws Throwable {
-        System.out.println(notificationRequest.getNotificationType());
         Notification parsedNotification = parseNotification(notificationRequest);
 
         switch (notificationRequest.getNotificationType()) {

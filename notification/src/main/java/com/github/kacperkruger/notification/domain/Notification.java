@@ -1,6 +1,6 @@
 package com.github.kacperkruger.notification.domain;
 
-import com.github.kacperkruger.clients.notification.domain.NotificationResponse;
+import com.github.kacperkruger.clients.notification.domain.NotificationStatus;
 import com.github.kacperkruger.clients.notification.domain.NotificationType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,7 +37,7 @@ public class Notification {
         this.notificationType = notificationType.name();
     }
 
-    public Notification(String receiver, String subject, LocalDateTime dateOfSend, NotificationType notificationType, NotificationResponse status) {
+    public Notification(String receiver, String subject, LocalDateTime dateOfSend, NotificationType notificationType, NotificationStatus status) {
         this.receiver = receiver;
         this.subject = subject;
         this.dateOfSend = dateOfSend;
@@ -96,7 +96,7 @@ public class Notification {
         return status;
     }
 
-    public void setStatus(NotificationResponse status) {
+    public void setStatus(NotificationStatus status) {
         this.status = status.name();
     }
 }

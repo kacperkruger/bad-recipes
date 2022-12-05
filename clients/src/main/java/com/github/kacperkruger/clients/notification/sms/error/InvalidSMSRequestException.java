@@ -1,13 +1,11 @@
 package com.github.kacperkruger.clients.notification.sms.error;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.web.server.ResponseStatusException;
 
-@ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Invalid sms request")
-public class InvalidSMSRequestException extends Exception {
+public class InvalidSMSRequestException extends ResponseStatusException {
 
-    @Override
-    public String getMessage() {
-        return "Invalid sms request";
+    public InvalidSMSRequestException(HttpStatusCode status, String reason) {
+        super(status, reason);
     }
 }
