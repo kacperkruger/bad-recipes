@@ -1,6 +1,8 @@
 package com.github.kacperkruger.clients.notification.email;
 
-import com.github.kacperkruger.clients.notification.email.error.EmailException;
+import com.github.kacperkruger.clients.notification.email.domain.EmailRequest;
+import com.github.kacperkruger.clients.notification.email.error.InvalidEmailRequestException;
+import feign.FeignException;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,5 +15,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface NotificationEmailClient {
 
     @PostMapping
-    void sendMessage(@RequestBody EmailRequest emailRequest) throws EmailException;
+    void sendMessage(@RequestBody EmailRequest emailRequest) throws InvalidEmailRequestException, FeignException;
 }

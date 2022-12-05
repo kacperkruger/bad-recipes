@@ -1,10 +1,7 @@
 package com.github.kacperkruger.notificationEmail.service;
 
-import com.github.kacperkruger.notificationEmail.domain.EmailRequest;
-import com.github.kacperkruger.clients.notification.email.error.InvalidFormEmailException;
-import com.github.kacperkruger.clients.notification.email.error.InvalidMessageException;
-import com.github.kacperkruger.clients.notification.email.error.InvalidSubjectException;
-import com.github.kacperkruger.clients.notification.email.error.InvalidToEmailException;
+import com.github.kacperkruger.clients.notification.email.domain.EmailRequest;
+import com.github.kacperkruger.notificationEmail.service.error.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -31,7 +28,7 @@ class NotificationEmailServiceTest {
     }
 
     @Test
-    void validateAndSendShouldCallMailSenderMethodSendWhenEmailRequestCorrect() throws InvalidSubjectException, InvalidMessageException, InvalidFormEmailException, InvalidToEmailException {
+    void validateAndSendShouldCallMailSenderMethodSendWhenEmailRequestCorrect() throws EmailException {
         EmailRequest correctEmailRequest = new EmailRequest("test@gmail.com", "test@gmail.com", "test", "test");
         SimpleMailMessage correctMailMessage = new SimpleMailMessage();
         correctMailMessage.setFrom(correctEmailRequest.getFromEmail());
@@ -45,7 +42,7 @@ class NotificationEmailServiceTest {
     }
 
     @Test
-    void validateEmailRequestShouldPassWhenEmailRequestCorrect() throws InvalidSubjectException, InvalidMessageException, InvalidFormEmailException, InvalidToEmailException {
+    void validateEmailRequestShouldPassWhenEmailRequestCorrect() throws EmailException {
         EmailRequest correctEmailRequest = new EmailRequest("test@gmail.com", "test@gmail.com", "test", "test");
         emailService.validateEmailRequest(correctEmailRequest);
     }
@@ -54,9 +51,7 @@ class NotificationEmailServiceTest {
     void validateEmailRequestShouldThrowInvalidFormEmailExceptionWhenFromEmailInvalid() {
         EmailRequest invalidEmailRequest = new EmailRequest("test", "test@gmail.com", "test", "test");
 
-        Exception exception = assertThrows(InvalidFormEmailException.class, () -> {
-            emailService.validateEmailRequest(invalidEmailRequest);
-        });
+        Exception exception = assertThrows(InvalidFormEmailException.class, () -> emailService.validateEmailRequest(invalidEmailRequest));
 
         String expectedMessage = "Invalid from email address";
         assertEquals(expectedMessage, exception.getMessage());
@@ -66,9 +61,7 @@ class NotificationEmailServiceTest {
     void validateEmailRequestShouldThrowInvalidToEmailExceptionWhenToEmailNotValidate() {
         EmailRequest invalidEmailRequest = new EmailRequest("test@gmail.com", "test", "test", "test");
 
-        Exception exception = assertThrows(InvalidToEmailException.class, () -> {
-            emailService.validateEmailRequest(invalidEmailRequest);
-        });
+        Exception exception = assertThrows(InvalidToEmailException.class, () -> emailService.validateEmailRequest(invalidEmailRequest));
 
         String expectedMessage = "Invalid to email address";
         assertEquals(expectedMessage, exception.getMessage());
@@ -77,9 +70,7 @@ class NotificationEmailServiceTest {
     void validateEmailRequestShouldThrowInvalidSubjectExceptionWhenSubjectIsEmpty() {
         EmailRequest invalidEmailRequest = new EmailRequest("test@gmail.com", "test@gmail.com", "", "test");
 
-        Exception exception = assertThrows(InvalidSubjectException.class, () -> {
-            emailService.validateEmailRequest(invalidEmailRequest);
-        });
+        Exception exception = assertThrows(InvalidSubjectException.class, () -> emailService.validateEmailRequest(invalidEmailRequest));
 
         String expectedMessage = "Subject can not be empty";
         assertEquals(expectedMessage, exception.getMessage());
@@ -88,9 +79,7 @@ class NotificationEmailServiceTest {
     void validateEmailRequestShouldThrowInvalidMessageExceptionWhenMessageIsEmpty() {
         EmailRequest invalidEmailRequest = new EmailRequest("test@gmail.com", "test@gmail.com", "test", "");
 
-        Exception exception = assertThrows(InvalidMessageException.class, () -> {
-            emailService.validateEmailRequest(invalidEmailRequest);
-        });
+        Exception exception = assertThrows(InvalidMessageException.class, () -> emailService.validateEmailRequest(invalidEmailRequest));
 
         String expectedMessage = "Message can not be empty";
         assertEquals(expectedMessage, exception.getMessage());

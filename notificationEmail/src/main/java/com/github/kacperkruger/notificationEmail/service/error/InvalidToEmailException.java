@@ -1,4 +1,4 @@
-package com.github.kacperkruger.clients.notification.email.error;
+package com.github.kacperkruger.notificationEmail.service.error;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

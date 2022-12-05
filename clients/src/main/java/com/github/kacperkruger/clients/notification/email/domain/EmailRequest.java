@@ -1,4 +1,4 @@
-package com.github.kacperkruger.clients.notification.email;
+package com.github.kacperkruger.clients.notification.email.domain;
 
 public class EmailRequest {
 

@@ -1,7 +1,7 @@
 package com.github.kacperkruger.notificationEmail.service;
 
-import com.github.kacperkruger.clients.notification.email.EmailRequest;
-import com.github.kacperkruger.clients.notification.email.error.*;
+import com.github.kacperkruger.clients.notification.email.domain.EmailRequest;
+import com.github.kacperkruger.notificationEmail.service.error.*;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;

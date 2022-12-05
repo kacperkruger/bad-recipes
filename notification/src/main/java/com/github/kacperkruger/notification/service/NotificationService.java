@@ -1,7 +1,7 @@
 package com.github.kacperkruger.notification.service;
 
 import com.github.kacperkruger.clients.notification.domain.NotificationRequest;
-import com.github.kacperkruger.clients.notification.email.EmailRequest;
+import com.github.kacperkruger.clients.notification.email.domain.EmailRequest;
 import com.github.kacperkruger.clients.notification.email.NotificationEmailClient;
 import com.github.kacperkruger.clients.notification.email.error.EmailException;
 import com.github.kacperkruger.clients.notification.sms.NotificationSMSClient;

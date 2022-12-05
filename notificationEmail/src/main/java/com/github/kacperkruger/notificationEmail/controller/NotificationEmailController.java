@@ -1,7 +1,7 @@
 package com.github.kacperkruger.notificationEmail.controller;
 
-import com.github.kacperkruger.clients.notification.email.EmailRequest;
-import com.github.kacperkruger.clients.notification.email.error.EmailException;
+import com.github.kacperkruger.clients.notification.email.domain.EmailRequest;
+import com.github.kacperkruger.notificationEmail.service.error.EmailException;
 import com.github.kacperkruger.notificationEmail.service.NotificationEmailService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
