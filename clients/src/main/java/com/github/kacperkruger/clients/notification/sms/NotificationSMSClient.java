@@ -5,7 +5,6 @@ import com.github.kacperkruger.clients.notification.sms.domain.SMSRequest;
 import com.github.kacperkruger.clients.notification.sms.error.InvalidSMSRequestException;
 import feign.FeignException;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
