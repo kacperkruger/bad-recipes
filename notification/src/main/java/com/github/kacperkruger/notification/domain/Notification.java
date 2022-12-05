@@ -1,8 +1,10 @@
 package com.github.kacperkruger.notification.domain;
 
-import com.github.kacperkruger.clients.notification.NotificationType;
+import com.github.kacperkruger.clients.notification.domain.NotificationResponse;
+import com.github.kacperkruger.clients.notification.domain.NotificationType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.time.LocalDateTime;
@@ -11,33 +13,43 @@ import java.time.LocalDateTime;
 public class Notification {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String to;
+    private String receiver;
 
     private String subject;
 
     private LocalDateTime dateOfSend;
 
-    private NotificationType notificationType;
+    private String notificationType;
+
+    private String status;
 
     public Notification() {
     }
 
-    public Notification(Long id, String to, String subject, LocalDateTime dateOfSend, NotificationType notificationType) {
+    public Notification(Long id, String receiver, String subject, LocalDateTime dateOfSend, NotificationType notificationType) {
         this.id = id;
-        this.to = to;
+        this.receiver = receiver;
         this.subject = subject;
         this.dateOfSend = dateOfSend;
-        this.notificationType = notificationType;
+        this.notificationType = notificationType.name();
     }
 
-    public Notification(String to, String subject, LocalDateTime dateOfSend, NotificationType notificationType) {
-        this.to = to;
+    public Notification(String receiver, String subject, LocalDateTime dateOfSend, NotificationType notificationType, NotificationResponse status) {
+        this.receiver = receiver;
         this.subject = subject;
         this.dateOfSend = dateOfSend;
-        this.notificationType = notificationType;
+        this.notificationType = notificationType.name();
+        this.status = status.name();
+    }
+
+    public Notification(String receiver, String subject, LocalDateTime dateOfSend, NotificationType notificationType) {
+        this.receiver = receiver;
+        this.subject = subject;
+        this.dateOfSend = dateOfSend;
+        this.notificationType = notificationType.name();
     }
 
     public Long getId() {
@@ -48,12 +60,12 @@ public class Notification {
         this.id = id;
     }
 
-    public String getTo() {
-        return to;
+    public String getReceiver() {
+        return receiver;
     }
 
-    public void setTo(String to) {
-        this.to = to;
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
     }
 
     public String getSubject() {
@@ -72,11 +84,19 @@ public class Notification {
         this.dateOfSend = dateOfSend;
     }
 
-    public NotificationType getNotificationType() {
+    public String getNotificationType() {
         return notificationType;
     }
 
     public void setNotificationType(NotificationType notificationType) {
-        this.notificationType = notificationType;
+        this.notificationType = notificationType.name();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(NotificationResponse status) {
+        this.status = status.name();
     }
 }
