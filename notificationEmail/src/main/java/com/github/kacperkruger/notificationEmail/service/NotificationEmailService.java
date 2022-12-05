@@ -1,10 +1,7 @@
 package com.github.kacperkruger.notificationEmail.service;
 
 import com.github.kacperkruger.clients.notification.email.EmailRequest;
-import com.github.kacperkruger.notificationEmail.service.error.InvalidFormEmailException;
-import com.github.kacperkruger.notificationEmail.service.error.InvalidMessageException;
-import com.github.kacperkruger.notificationEmail.service.error.InvalidSubjectException;
-import com.github.kacperkruger.notificationEmail.service.error.InvalidToEmailException;
+import com.github.kacperkruger.clients.notification.email.error.*;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -20,7 +17,7 @@ public class NotificationEmailService {
         this.mailSender = mailSender;
     }
 
-    public void validateAndSend(EmailRequest emailRequest) throws InvalidSubjectException, InvalidMessageException, InvalidFormEmailException, InvalidToEmailException {
+    public void validateAndSend(EmailRequest emailRequest) throws EmailException {
         validateEmailRequest(emailRequest);
 
         SimpleMailMessage mailMessage = new SimpleMailMessage();
@@ -32,7 +29,7 @@ public class NotificationEmailService {
         mailSender.send(mailMessage);
     }
 
-    public void validateEmailRequest(EmailRequest emailRequest) throws InvalidFormEmailException, InvalidToEmailException, InvalidSubjectException, InvalidMessageException {
+    public void validateEmailRequest(EmailRequest emailRequest) throws EmailException {
         if (isNotCorrectEmailAddress(emailRequest.getFromEmail())) throw new InvalidFormEmailException();
         if (isNotCorrectEmailAddress(emailRequest.getToEmail())) throw new InvalidToEmailException();
         if (emailRequest.getSubject().isEmpty()) throw new InvalidSubjectException();

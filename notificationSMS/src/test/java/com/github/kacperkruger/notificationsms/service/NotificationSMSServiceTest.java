@@ -1,10 +1,11 @@
 package com.github.kacperkruger.notificationsms.service;
 
-import com.github.kacperkruger.notificationSMS.domain.SMSRequest;
+import com.github.kacperkruger.clients.notification.sms.domain.SMSRequest;
+import com.github.kacperkruger.clients.notification.sms.error.SMSRequestException;
 import com.github.kacperkruger.notificationSMS.sender.SMSSender;
 import com.github.kacperkruger.notificationSMS.service.NotificationSMSService;
-import com.github.kacperkruger.notificationSMS.service.error.InvalidMessageException;
-import com.github.kacperkruger.notificationSMS.service.error.InvalidPhoneNumberException;
+import com.github.kacperkruger.clients.notification.sms.error.InvalidMessageException;
+import com.github.kacperkruger.clients.notification.sms.error.InvalidPhoneNumberException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -27,7 +28,7 @@ class NotificationSMSServiceTest {
     }
 
     @Test
-    void validateAndSendShouldCallSMSSenderSendMethodWhenPhoneNumberAndMessageCorrect() throws InvalidMessageException, InvalidPhoneNumberException {
+    void validateAndSendShouldCallSMSSenderSendMethodWhenPhoneNumberAndMessageCorrect() throws SMSRequestException, InterruptedException {
         SMSRequest correctSMSRequest = new SMSRequest("+48123456789", "Hello World!");
         smsService.validateAndSend(correctSMSRequest);
         verify(smsSender, times(1)).send(correctSMSRequest);
@@ -58,7 +59,7 @@ class NotificationSMSServiceTest {
     }
 
     @Test
-    void validateSMSRequestShouldPassWhenPhoneNumberAndMessageCorrect() throws InvalidMessageException, InvalidPhoneNumberException {
+    void validateSMSRequestShouldPassWhenPhoneNumberAndMessageCorrect() throws SMSRequestException {
         SMSRequest correctSMSRequest = new SMSRequest("+48123456789", "Hello World!");
         smsService.validateSMSRequest(correctSMSRequest);
     }

@@ -1,10 +1,10 @@
 package com.github.kacperkruger.notificationEmail.service;
 
 import com.github.kacperkruger.notificationEmail.domain.EmailRequest;
-import com.github.kacperkruger.notificationEmail.service.error.InvalidFormEmailException;
-import com.github.kacperkruger.notificationEmail.service.error.InvalidMessageException;
-import com.github.kacperkruger.notificationEmail.service.error.InvalidSubjectException;
-import com.github.kacperkruger.notificationEmail.service.error.InvalidToEmailException;
+import com.github.kacperkruger.clients.notification.email.error.InvalidFormEmailException;
+import com.github.kacperkruger.clients.notification.email.error.InvalidMessageException;
+import com.github.kacperkruger.clients.notification.email.error.InvalidSubjectException;
+import com.github.kacperkruger.clients.notification.email.error.InvalidToEmailException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;

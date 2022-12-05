@@ -1,6 +1,6 @@
 package com.github.kacperkruger.notificationSMS.sender;
 
-import com.github.kacperkruger.clients.notification.sms.SMSRequest;
+import com.github.kacperkruger.clients.notification.sms.domain.SMSRequest;
 
 public interface SMSSender {
 

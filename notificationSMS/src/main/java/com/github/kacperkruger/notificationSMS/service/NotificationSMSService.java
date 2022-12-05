@@ -1,10 +1,10 @@
 package com.github.kacperkruger.notificationSMS.service;
 
-import com.github.kacperkruger.clients.notification.NotificationResponse;
-import com.github.kacperkruger.clients.notification.sms.SMSRequest;
+import com.github.kacperkruger.clients.notification.sms.domain.SMSRequest;
 import com.github.kacperkruger.notificationSMS.sender.SMSSender;
 import com.github.kacperkruger.notificationSMS.service.error.InvalidMessageException;
 import com.github.kacperkruger.notificationSMS.service.error.InvalidPhoneNumberException;
+import com.github.kacperkruger.notificationSMS.service.error.SMSRequestException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +21,12 @@ public class NotificationSMSService {
         this.smsSender = smsSender;
     }
 
-    public void validateAndSend(SMSRequest smsRequest) throws InvalidPhoneNumberException, InvalidMessageException, InterruptedException {
+    public void validateAndSend(SMSRequest smsRequest) throws SMSRequestException, InterruptedException {
         validateSMSRequest(smsRequest);
         smsSender.send(smsRequest);
     }
 
-    public void validateSMSRequest(SMSRequest smsRequest) throws InvalidPhoneNumberException, InvalidMessageException {
+    public void validateSMSRequest(SMSRequest smsRequest) throws SMSRequestException {
         if (!isPhoneNumberCorrect(smsRequest.getPhoneNumber())) throw new InvalidPhoneNumberException();
         if (!isMessageNotEmpty(smsRequest.getMessage())) throw new InvalidMessageException();
     }
