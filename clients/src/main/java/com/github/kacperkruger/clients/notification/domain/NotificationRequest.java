@@ -1,8 +1,8 @@
-package com.github.kacperkruger.clients.notification;
+package com.github.kacperkruger.clients.notification.domain;
 
 public class NotificationRequest {
 
-    private String to;
+    private String receiver;
 
     private String subject;
 
@@ -14,18 +14,18 @@ public class NotificationRequest {
     }
 
     public NotificationRequest(String to, String subject, String message, NotificationType notificationType) {
-        this.to = to;
+        this.receiver = to;
         this.subject = subject;
         this.message = message;
         this.notificationType = notificationType;
     }
 
-    public String getTo() {
-        return to;
+    public String getReceiver() {
+        return receiver;
     }
 
-    public void setTo(String to) {
-        this.to = to;
+    public void setReceiver(String to) {
+        this.receiver = to;
     }
 
     public String getSubject() {
