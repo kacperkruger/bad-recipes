@@ -1,12 +1,7 @@
 package com.github.kacperkruger.notification.service;
 
 import com.github.kacperkruger.clients.notification.domain.NotificationRequest;
-import com.github.kacperkruger.clients.notification.email.domain.EmailRequest;
-import com.github.kacperkruger.clients.notification.email.NotificationEmailClient;
-import com.github.kacperkruger.clients.notification.email.error.InvalidEmailRequestException;
-import com.github.kacperkruger.clients.notification.sms.NotificationSMSClient;
-import com.github.kacperkruger.clients.notification.sms.domain.SMSRequest;
-import com.github.kacperkruger.clients.notification.sms.error.InvalidSMSRequestException;
+import com.github.kacperkruger.clients.notification.service.NotificationSenderStrategyResolver;
 import com.github.kacperkruger.notification.domain.Notification;
 import com.github.kacperkruger.notification.repository.NotificationRepository;
 import org.springframework.stereotype.Service;
@@ -19,58 +14,33 @@ import static com.github.kacperkruger.clients.notification.domain.NotificationSt
 @Service
 public class NotificationService {
 
-    private final NotificationSMSClient smsClient;
-
-    private final NotificationEmailClient emailClient;
+    private final NotificationSenderStrategyResolver notificationSenderResolver;
 
     private final NotificationRepository notificationRepository;
 
-    public NotificationService(NotificationSMSClient smsClient, NotificationEmailClient emailClient, NotificationRepository notificationRepository) {
-        this.smsClient = smsClient;
-        this.emailClient = emailClient;
+    public NotificationService(NotificationSenderStrategyResolver notificationSenderResolver, NotificationRepository notificationRepository) {
+        this.notificationSenderResolver = notificationSenderResolver;
         this.notificationRepository = notificationRepository;
     }
 
     public void sendNotification(NotificationRequest notificationRequest) {
-        Notification parsedNotification = parseNotification(notificationRequest);
-
-        switch (notificationRequest.getNotificationType()) {
-            case SMS -> {
-                System.out.println("sms");
-                SMSRequest smsRequest = new SMSRequest(notificationRequest.getReceiver(), notificationRequest.getMessage());
-                try {
-                    smsClient.sendSMS(smsRequest);
-                    parsedNotification.setStatus(SENT);
-                    notificationRepository.save(parsedNotification);
-                } catch (InvalidSMSRequestException e) {
-                    parsedNotification.setStatus(ERROR);
-                    notificationRepository.save(parsedNotification);
-                    throw e;
-                }
-            }
-            case EMAIL -> {
-                System.out.println("email");
-                EmailRequest emailRequest = new EmailRequest("no-reply@badrecipes.cf", notificationRequest.getReceiver(), notificationRequest.getSubject(), notificationRequest.getMessage());
-                try {
-                    emailClient.sendMessage(emailRequest);
-                    parsedNotification.setStatus(SENT);
-                    notificationRepository.save(parsedNotification);
-                } catch (InvalidEmailRequestException e) {
-                    parsedNotification.setStatus(ERROR);
-                    notificationRepository.save(parsedNotification);
-                    throw e;
-                }
-            }
-            default -> System.out.println("other");
-        }
-    }
-
-    private Notification parseNotification(NotificationRequest notificationRequest) {
-        return new Notification(
+        Notification notification = new Notification(
                 notificationRequest.getReceiver(),
                 notificationRequest.getSubject(),
                 LocalDateTime.now(),
-                notificationRequest.getNotificationType()
+                notificationRequest.getType().name(),
+                SENT.name()
         );
+
+        try {
+            notificationSenderResolver.getSender(notificationRequest.getType()).sendNotification(notificationRequest);
+            notification.setStatus(SENT);
+            notificationRepository.save(notification);
+        } catch (Throwable e) {
+            System.out.println(e.getMessage());
+            notification.setStatus(ERROR);
+            notificationRepository.save(notification);
+            throw e;
+        }
     }
 }

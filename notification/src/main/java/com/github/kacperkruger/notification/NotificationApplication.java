@@ -6,10 +6,11 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 
-@SpringBootApplication(scanBasePackages = {
-        "com.github.kacperkruger.clients",
-        "com.github.kacperkruger.notification"
-})
+@SpringBootApplication(
+        scanBasePackages = {
+                "com.github.kacperkruger.clients",
+                "com.github.kacperkruger.notification"
+        })
 @EnableFeignClients(
         basePackages = "com.github.kacperkruger.clients"
 )

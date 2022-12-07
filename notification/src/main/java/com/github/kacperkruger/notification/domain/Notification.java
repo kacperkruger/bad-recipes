@@ -29,27 +29,28 @@ public class Notification {
     public Notification() {
     }
 
-    public Notification(Long id, String receiver, String subject, LocalDateTime dateOfSend, NotificationType notificationType) {
+    public Notification(Long id, String receiver, String subject, LocalDateTime dateOfSend, String notificationType, String status) {
         this.id = id;
         this.receiver = receiver;
         this.subject = subject;
         this.dateOfSend = dateOfSend;
-        this.notificationType = notificationType.name();
+        this.notificationType = notificationType;
+        this.status = status;
     }
 
-    public Notification(String receiver, String subject, LocalDateTime dateOfSend, NotificationType notificationType, NotificationStatus status) {
+    public Notification(String receiver, String subject, LocalDateTime dateOfSend, String notificationType, String status) {
         this.receiver = receiver;
         this.subject = subject;
         this.dateOfSend = dateOfSend;
-        this.notificationType = notificationType.name();
-        this.status = status.name();
+        this.notificationType = notificationType;
+        this.status = status;
     }
 
-    public Notification(String receiver, String subject, LocalDateTime dateOfSend, NotificationType notificationType) {
+    public Notification(String receiver, String subject, LocalDateTime dateOfSend, String notificationType) {
         this.receiver = receiver;
         this.subject = subject;
         this.dateOfSend = dateOfSend;
-        this.notificationType = notificationType.name();
+        this.notificationType = notificationType;
     }
 
     public Long getId() {
