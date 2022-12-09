@@ -8,7 +8,7 @@ pipeline {
             image 'openjdk:17-slim'
             args  '-v /tmp:/tmp'
             reuseNode true
-        }
+            }
     }
 
     environment {
@@ -20,21 +20,27 @@ pipeline {
     stages {
         stage("build") {
             steps {
-                sh "./gradlew clean build"
+                dir("notification") {
+                    sh "./gradlew clean build"
+                }
             }
         }
 
 
         stage("test") {
             steps {
-                sh "./gradlew test"
+                dir("notification") {
+                    sh "./gradlew test"
+                }
             }
         }
 
         stage("docker build") {
             steps {
                 script {
-                    sh "docker build -t kacperkruger/notification:${TAG} ."
+                    dir("notification") {
+                        sh "docker build -t kacperkruger/test_rest_api:${TAG} ."
+                    }
                 }
             }
         }
@@ -46,7 +52,7 @@ pipeline {
             steps {
                 script {
                     sh "echo ${dockerhub_PSW} | docker login -u ${dockerhub_USR} --password-stdin"
-                    sh "docker push kacperkruger/notification:${TAG}"
+                    sh "docker push kacperkruger/test_rest_api:${TAG}"
                 }
             }
         }
