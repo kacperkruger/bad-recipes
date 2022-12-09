@@ -18,7 +18,7 @@ import static com.github.kacperkruger.clients.notification.domain.NotificationTy
 @Service
 public class NotificationSMSSender implements NotificationSenderStrategy {
 
-    private static final String PATH = "/api/v1/notification-email";
+    private static final String PATH = "/api/v1/notification-sms";
 
     private final WebClient webClient;
 
