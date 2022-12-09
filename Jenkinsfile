@@ -1,13 +1,11 @@
-void setBuildStatus(String message, String context, String state) {
-    withCredentials([string(credentialsId: 'github-commit-status-token', variable: 'TOKEN')]) {
-        sh """
-            set -x
-            curl \"https://api.github.com/repos/org/repo/statuses/$GIT_COMMIT?access_token=$TOKEN\" \
-                -H \"Content-Type: application/json\" \
-                -X POST \
-                -d \"{\\\"description\\\": \\\"$message\\\", \\\"state\\\": \\\"$state\\\", \\\"context\\\": \\\"$context\\\", \\\"target_url\\\": \\\"$BUILD_URL\\\"}\"
-        """
-    }
+void setBuildStatus(String message, String state) {
+  step([
+      $class: "GitHubCommitStatusSetter",
+      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "env.GIT_URL"],
+      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/build-status"],
+      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
+      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
+  ]);
 }
 
 pipeline {
@@ -33,12 +31,7 @@ pipeline {
         stage("build") {
             steps {
                 script{
-                    try {
-                        sh "./gradlew clean build"
-                        sh(script: "/usr/bin/curl --help")
-                    } catch (err) {
-                        throw err
-                    }
+                    sh "./gradlew clean build"
                 }
             }
         }
@@ -49,6 +42,14 @@ pipeline {
                     sh "./gradlew test"
                 }
             }
+        }
+    }
+    post {
+        success {
+            setBuildStatus("Build succeeded", "SUCCESS");
+        }
+        failure {
+            setBuildStatus("Build failed", "FAILURE");
         }
     }
 }
