@@ -20,14 +20,18 @@ pipeline {
     stages {
         stage("build") {
             steps {
-                sh "./gradlew clean build"
+                withGradle() {
+                    sh "./gradlew clean build"
+                }
             }
         }
 
 
         stage("test") {
             steps {
-                sh "./gradlew test"
+                withGradle() {
+                    sh "./gradlew test"
+                }
             }
         }
 
