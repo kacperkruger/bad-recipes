@@ -1,6 +1,7 @@
 package com.github.kacperkruger.notification.service;
 
 import com.github.kacperkruger.clients.notification.domain.NotificationRequest;
+import com.github.kacperkruger.clients.notification.domain.NotificationType;
 import com.github.kacperkruger.clients.notification.service.NotificationSenderStrategyResolver;
 import com.github.kacperkruger.notification.domain.Notification;
 import com.github.kacperkruger.notification.repository.NotificationRepository;
@@ -24,23 +25,31 @@ public class NotificationService {
     }
 
     public void sendNotification(NotificationRequest notificationRequest) {
+        NotificationType notificationType = parseNotificationType(notificationRequest.getType());
         Notification notification = new Notification(
                 notificationRequest.getReceiver(),
                 notificationRequest.getSubject(),
                 LocalDateTime.now(),
-                notificationRequest.getType().name(),
+                notificationType.name(),
                 SENT.name()
         );
 
         try {
-            notificationSenderResolver.getSender(notificationRequest.getType()).sendNotification(notificationRequest);
+            notificationSenderResolver.getSender(notificationType).sendNotification(notificationRequest);
             notification.setStatus(SENT);
             notificationRepository.save(notification);
         } catch (Throwable e) {
-            System.out.println(e.getMessage());
             notification.setStatus(ERROR);
             notificationRepository.save(notification);
             throw e;
+        }
+    }
+
+    private NotificationType parseNotificationType(String type) {
+        try {
+            return NotificationType.valueOf(type);
+        } catch (IllegalArgumentException e) {
+            return NotificationType.ERROR;
         }
     }
 }

@@ -8,12 +8,12 @@ public class NotificationRequest {
 
     private String message;
 
-    private NotificationType type;
+    private String type;
 
     public NotificationRequest() {
     }
 
-    public NotificationRequest(String receiver, String subject, String message, NotificationType type) {
+    public NotificationRequest(String receiver, String subject, String message, String type) {
         this.receiver = receiver;
         this.subject = subject;
         this.message = message;
@@ -44,11 +44,11 @@ public class NotificationRequest {
         this.message = message;
     }
 
-    public NotificationType getType() { 
+    public String getType() {
         return type;
     }
 
-    public void setType(NotificationType type) {
+    public void setType(String type) {
         this.type = type;
     }
 }
