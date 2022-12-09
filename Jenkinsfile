@@ -20,19 +20,14 @@ pipeline {
     stages {
         stage("build") {
             steps {
-                dir("notification") {
-                    sh "./gradlew clean build"
-                }
+                sh "./gradlew clean build"
             }
         }
 
-
         stage("test") {
             steps {
-                dir("notification") {
-                    withGradle() {
-                        sh "./gradlew test"
-                    }
+                withGradle() {
+                    sh "./gradlew test"
                 }
             }
         }
@@ -56,13 +51,9 @@ pipeline {
             steps {
                 script {
                     sh "echo ${dockerhub_PSW} | docker login -u ${dockerhub_USR} --password-stdin"
-                    sh "docker push kacperkruger/test_rest_api:${TAG}"
+                    sh "docker push kacperkruger/bad-recipes:${TAG}"
                 }
             }
         }
     }
-}
-
-node {
-
 }

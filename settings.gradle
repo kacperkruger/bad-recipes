@@ -1,6 +1,6 @@
 rootProject.name = 'recipes'
-include 'notificationSMS'
-include 'notificationEmail'
+include 'notification-sms'
+include 'notification-email'
 include 'notification'
 include 'eureka-server'
 include 'clients'
