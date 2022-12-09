@@ -38,7 +38,6 @@ pipeline {
                         sh "./gradlew clean build"
                         sh(script: "curl --help")
                     } catch (err) {
-                        sh(setBuildStatus("Failed", "pl-compile", "failure"));
                         throw err
                     }
                 }
