@@ -1,3 +1,15 @@
+void setBuildStatus(String message, String context, String state) {
+    withCredentials([string(credentialsId: 'github-commit-status-token', variable: 'TOKEN')]) {
+        sh """
+            set -x
+            curl \"https://api.github.com/repos/org/repo/statuses/$GIT_COMMIT?access_token=$TOKEN\" \
+                -H \"Content-Type: application/json\" \
+                -X POST \
+                -d \"{\\\"description\\\": \\\"$message\\\", \\\"state\\\": \\\"$state\\\", \\\"context\\\": \\\"$context\\\", \\\"target_url\\\": \\\"$BUILD_URL\\\"}\"
+        """
+    }
+}
+
 pipeline {
     options {
         timeout(5)
@@ -20,7 +32,14 @@ pipeline {
     stages {
         stage("build") {
             steps {
-                sh "./gradlew clean build"
+                setBuildStatus("Compiling", "compile", "pending");
+                try {
+                    sh "./gradlew clean build"
+                    setBuildStatus("Build complete", "compile", "success");
+                } catch (err) {
+                    setBuildStatus("Failed", "pl-compile", "failure");
+                    throw err
+                }
             }
         }
 
