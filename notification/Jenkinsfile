@@ -30,7 +30,9 @@ pipeline {
         stage("test") {
             steps {
                 dir("notification") {
-                    sh "./gradlew test"
+                    withGradle() {
+                        sh "./gradlew test"
+                    }
                 }
             }
         }
@@ -39,7 +41,9 @@ pipeline {
             steps {
                 script {
                     dir("notification") {
-                        sh "docker build -t kacperkruger/test_rest_api:${TAG} ."
+                        withGradle() {
+                            sh "docker build -t kacperkruger/test_rest_api:${TAG} ."
+                        }
                     }
                 }
             }
