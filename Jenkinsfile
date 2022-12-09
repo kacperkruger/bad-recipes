@@ -2,10 +2,10 @@ void setBuildStatus(String message, String context, String state) {
     withCredentials([string(credentialsId: 'github-commit-status-token', variable: 'TOKEN')]) {
         sh """
             set -x
-            sh "curl \"https://api.github.com/repos/org/repo/statuses/$GIT_COMMIT?access_token=$TOKEN\" \
+            curl \"https://api.github.com/repos/org/repo/statuses/$GIT_COMMIT?access_token=$TOKEN\" \
                 -H \"Content-Type: application/json\" \
                 -X POST \
-                -d \"{\\\"description\\\": \\\"$message\\\", \\\"state\\\": \\\"$state\\\", \\\"context\\\": \\\"$context\\\", \\\"target_url\\\": \\\"$BUILD_URL\\\"}\""
+                -d \"{\\\"description\\\": \\\"$message\\\", \\\"state\\\": \\\"$state\\\", \\\"context\\\": \\\"$context\\\", \\\"target_url\\\": \\\"$BUILD_URL\\\"}\"
         """
     }
 }
@@ -36,9 +36,9 @@ pipeline {
                 script{
                     try {
                         sh "./gradlew clean build"
-                        setBuildStatus("Build complete", "compile", "success");
+                        sh(setBuildStatus("Build complete", "compile", "success"));
                     } catch (err) {
-                        setBuildStatus("Failed", "pl-compile", "failure");
+                        sh(setBuildStatus("Failed", "pl-compile", "failure"));
                         throw err
                     }
                 }
