@@ -32,7 +32,6 @@ pipeline {
     stages {
         stage("build") {
             steps {
-                setBuildStatus("Compiling", "compile", "pending");
                 script{
                     try {
                         sh "./gradlew clean build"
