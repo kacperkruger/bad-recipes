@@ -31,25 +31,5 @@ pipeline {
                 }
             }
         }
-
-        stage("docker build") {
-            steps {
-                script {
-                    sh "docker build -t kacperkruger/bad-recipes:${TAG} ."
-                }
-            }
-        }
-
-        stage("pushing to Dockerhub") {
-            when {
-                branch "master"
-            }
-            steps {
-                script {
-                    sh "echo ${dockerhub_PSW} | docker login -u ${dockerhub_USR} --password-stdin"
-                    sh "docker push kacperkruger/bad-recipes:${TAG}"
-                }
-            }
-        }
     }
 }
