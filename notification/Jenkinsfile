@@ -1,0 +1,74 @@
+pipeline {
+    options {
+        timeout(5)
+    }
+
+    agent any
+
+    environment {
+        DATE = new Date().format('yy.M')
+        TAG = "${DATE}.${BUILD_NUMBER}"
+        dockerhub = credentials("dockerhub")
+    }
+
+    stages {
+        stage("build") {
+            agent {
+                docker {
+                    image 'openjdk:17-slim'
+                    args  '-v /tmp:/tmp'
+                    reuseNode true
+                }
+            }
+
+            steps {
+                updateGitlabCommitStatus name: "build", state: "pending"
+                sh "./gradlew clean build"
+                updateGitlabCommitStatus name: "build", state: "success"
+            }
+        }
+
+
+        stage("test") {
+            agent {
+                docker {
+                    image 'openjdk:17-slim'
+                    args  '-v /tmp:/tmp'
+                    reuseNode true
+                }
+            }
+            steps {
+                updateGitlabCommitStatus name: "test", state: "pending"
+                sh "./gradlew test"
+                updateGitlabCommitStatus name: "test", state: "success"
+
+            }
+        }
+
+        stage("docker build") {
+            steps {
+                script {
+                    dir("rest_api") {
+                        sh "docker build -t kacperkruger/notification:${TAG} ."
+                    }
+                }
+            }
+        }
+
+        stage("pushing to Dockerhub") {
+            when {
+                branch "master"
+            }
+            steps {
+                script {
+                    sh "echo ${dockerhub_PSW} | docker login -u ${dockerhub_USR} --password-stdin"
+                    sh "docker push kacperkruger/notification:${TAG}"
+                }
+            }
+        }
+    }
+}
+
+node {
+
+}
