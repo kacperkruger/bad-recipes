@@ -35,11 +35,7 @@ pipeline {
         stage("docker build") {
             steps {
                 script {
-                    dir("notification") {
-                        withGradle() {
-                            sh "docker build -t kacperkruger/test_rest_api:${TAG} ."
-                        }
-                    }
+                    sh "docker build -t kacperkruger/bad-recipes:${TAG} ."
                 }
             }
         }
