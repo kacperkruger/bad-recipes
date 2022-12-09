@@ -4,10 +4,6 @@ pipeline {
     }
 
     agent any
-    tools {
-        gradle 'Gradle'
-        docker 'Docker'
-    }
 
     environment {
         DATE = new Date().format('yy.M')
