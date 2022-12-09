@@ -35,7 +35,7 @@ pipeline {
                 script{
                     try {
                         sh "./gradlew clean build"
-                        sh(script: "curl --help")
+                        sh(script: "/usr/bin/curl --help")
                     } catch (err) {
                         throw err
                     }
