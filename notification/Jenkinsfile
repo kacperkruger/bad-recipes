@@ -2,7 +2,7 @@ pipeline {
     options {
         timeout(5)
     }
-
+    agent any
     agent {
         docker {
             image 'openjdk:17-slim'
