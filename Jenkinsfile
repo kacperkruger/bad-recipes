@@ -33,12 +33,14 @@ pipeline {
         stage("build") {
             steps {
                 setBuildStatus("Compiling", "compile", "pending");
-                try {
-                    sh "./gradlew clean build"
-                    setBuildStatus("Build complete", "compile", "success");
-                } catch (err) {
-                    setBuildStatus("Failed", "pl-compile", "failure");
-                    throw err
+                script{
+                    try {
+                        sh "./gradlew clean build"
+                        setBuildStatus("Build complete", "compile", "success");
+                    } catch (err) {
+                        setBuildStatus("Failed", "pl-compile", "failure");
+                        throw err
+                    }
                 }
             }
         }
