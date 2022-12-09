@@ -2,10 +2,10 @@ void setBuildStatus(String message, String context, String state) {
     withCredentials([string(credentialsId: 'github-commit-status-token', variable: 'TOKEN')]) {
         sh """
             set -x
-            /usr/bin/curl \"https://api.github.com/repos/org/repo/statuses/$GIT_COMMIT?access_token=$TOKEN\" \
+            sh "curl \"https://api.github.com/repos/org/repo/statuses/$GIT_COMMIT?access_token=$TOKEN\" \
                 -H \"Content-Type: application/json\" \
                 -X POST \
-                -d \"{\\\"description\\\": \\\"$message\\\", \\\"state\\\": \\\"$state\\\", \\\"context\\\": \\\"$context\\\", \\\"target_url\\\": \\\"$BUILD_URL\\\"}\"
+                -d \"{\\\"description\\\": \\\"$message\\\", \\\"state\\\": \\\"$state\\\", \\\"context\\\": \\\"$context\\\", \\\"target_url\\\": \\\"$BUILD_URL\\\"}\""
         """
     }
 }
