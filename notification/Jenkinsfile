@@ -2,7 +2,7 @@ pipeline {
     options {
         timeout(5)
     }
-    agent any
+
     agent {
         docker {
             image 'openjdk:17-slim'
@@ -20,18 +20,14 @@ pipeline {
     stages {
         stage("build") {
             steps {
-                withGradle() {
-                    sh "./gradlew clean build"
-                }
+                sh "./gradlew clean build"
             }
         }
 
 
         stage("test") {
             steps {
-                withGradle() {
-                    sh "./gradlew test"
-                }
+                sh "./gradlew test"
             }
         }
 
