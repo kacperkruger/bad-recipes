@@ -15,7 +15,6 @@ pipeline {
 
     agent {
         docker {
-            label 'docker-server'
             image 'openjdk:17-slim'
             args  '-v /tmp:/tmp'
             reuseNode true
