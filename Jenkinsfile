@@ -30,7 +30,7 @@ pipeline {
     stages {
         stage("pre build") {
             steps {
-                setBuildStatus("Build succeeded", "SUCCESS");
+                setBuildStatus("Building", "PENDING");
             }
         }
 
