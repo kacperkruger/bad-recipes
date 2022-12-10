@@ -28,19 +28,21 @@ pipeline {
     }
 
     stages {
+        stage("pre build") {
+            steps {
+                setBuildStatus("Build succeeded", "SUCCESS");
+            }
+        }
+
         stage("build") {
             steps {
-                script{
-                    sh "./gradlew clean build"
-                }
+                sh "./gradlew clean build"
             }
         }
 
         stage("test") {
             steps {
-                withGradle() {
-                    sh "./gradlew test"
-                }
+                sh "./gradlew test"
             }
         }
     }
