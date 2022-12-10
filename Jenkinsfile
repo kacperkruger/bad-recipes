@@ -28,30 +28,26 @@ pipeline {
     }
 
     stages {
-        stage("pre build") {
-            steps {
-                setBuildStatus("Building", "PENDING");
-            }
-        }
-
         stage("build") {
             steps {
+                setBuildStatus("Building", "PENDING");
                 sh "./gradlew clean build"
             }
         }
 
         stage("test") {
             steps {
+                setBuildStatus("Testing", "PENDING");
                 sh "./gradlew test"
             }
         }
     }
     post {
         success {
-            setBuildStatus("Build succeeded", "SUCCESS");
+            setBuildStatus("Pipeline succeeded", "SUCCESS");
         }
         failure {
-            setBuildStatus("Build failed", "FAILURE");
+            setBuildStatus("Pipeline failed", "FAILURE");
         }
     }
 }
