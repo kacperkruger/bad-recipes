@@ -62,10 +62,14 @@ pipeline {
 
     post {
         success {
-            setBuildStatus("Pipeline succeeded", "SUCCESS");
+            steps {
+                setBuildStatus("Pipeline succeeded", "SUCCESS");
+            }
         }
         failure {
-            setBuildStatus("Pipeline failed", "FAILURE");
+            steps {
+                setBuildStatus("Pipeline failed", "FAILURE");
+            }
         }
     }
 }
