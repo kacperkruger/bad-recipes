@@ -1,7 +1,13 @@
+plugins {
+    id 'com.google.cloud.tools.jib'
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
 }
+
+jib.to.image = "kacperkruger/${project.name}:${project.version.toString()}"
 

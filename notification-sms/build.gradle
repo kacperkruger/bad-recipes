@@ -1,8 +1,13 @@
+plugins {
+    id'com.google.cloud.tools.jib'
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation "org.springframework.cloud:spring-cloud-starter-netflix-eureka-client"
-
     implementation 'com.twilio.sdk:twilio:9.1.4'
     implementation project(":clients")
 }
+
+jib.to.image = "kacperkruger/${project.name}:${project.version.toString()}"

@@ -41,7 +41,25 @@ pipeline {
                 sh "./gradlew test"
             }
         }
+
+        stage("pushing to Dockerhub") {
+            when {
+                branch "master"
+            }
+            steps {
+                setBuildStatus("Pushing docker images", "PENDING");
+                sh "./gradlew jib -x :jib"
+            }
+        }
+
+        stage("docker build") {
+            steps {
+                setBuildStatus("Building docker images", "PENDING");
+                sh "./gradlew jibDockerBuild -x :jibDockerBuild"
+            }
+        }
     }
+
     post {
         success {
             setBuildStatus("Pipeline succeeded", "SUCCESS");
