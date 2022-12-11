@@ -29,8 +29,9 @@ pipeline {
     stages {
         stage("docker build") {
             steps {
-                setBuildStatus("Building docker images", "PENDING");
-                sh "docker build ."
+                script {
+                        sh "docker build ."
+                }
             }
         }
     }
