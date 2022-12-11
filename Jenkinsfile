@@ -31,7 +31,7 @@ pipeline {
             steps {
                 withGradle() {
                     script {
-                        sh "gradle jibDockerBuild -x :jibDockerBuild"
+                        sh "./gradlew jibDockerBuild -x :jibDockerBuild"
                     }
                 }
             }
