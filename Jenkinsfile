@@ -29,8 +29,10 @@ pipeline {
     stages {
         stage("docker build") {
             steps {
-                script {
+                withGradle() {
+                    script {
                         sh "gradle jibDockerBuild -x :jibDockerBuild"
+                    }
                 }
             }
         }
