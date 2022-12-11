@@ -54,7 +54,7 @@ pipeline {
         stage("docker build") {
             steps {
                 setBuildStatus("Building docker images", "PENDING");
-                sh "./gradlew jibDockerBuild -x :jibDockerBuild"
+                sh "docker build ."
             }
         }
     }
