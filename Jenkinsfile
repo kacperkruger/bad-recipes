@@ -27,12 +27,35 @@ pipeline {
     }
 
     stages {
+        stage("build") {
+            steps {
+                setBuildStatus("Building", "PENDING");
+                sh "./gradlew clean build"
+            }
+        }
+
+        stage("test") {
+            steps {
+                setBuildStatus("Testing", "PENDING");
+                sh "./gradlew test"
+            }
+        }
+
+        stage("pushing to Dockerhub") {
+            when {
+                branch "master"
+            }
+            steps {
+                setBuildStatus("Pushing docker images", "PENDING");
+                sh "./gradlew jib -x :jib"
+            }
+        }
+
         stage("docker build") {
             steps {
-                withGradle() {
-                    script {
-                        sh "./gradlew jibDockerBuild -x :jibDockerBuild"
-                    }
+                setBuildStatus("Building docker images", "PENDING");
+                script {
+                    sh "./gradlew jibDockerBuild -x :jibDockerBuild"
                 }
             }
         }
