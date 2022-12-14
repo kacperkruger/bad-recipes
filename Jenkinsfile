@@ -55,7 +55,7 @@ pipeline {
                 }
                 stage("notification") {
                     when {
-                        changeset pattern: "/notification/*"
+                        changeset pattern: "notification/*"
                         beforeAgent true
                     }
                     steps {
@@ -67,7 +67,7 @@ pipeline {
                 }
                 stage("clients") {
                     when {
-                        changeset pattern: "/clients/*"
+                        changeset pattern: "clients/*"
                         beforeAgent true
                     }
                     steps {
@@ -79,7 +79,7 @@ pipeline {
                 }
                 stage("eureka-server") {
                     when {
-                        changeset pattern: "/eureka-server/*"
+                        changeset pattern: "eureka-server/*"
                         beforeAgent true
                     }
                     steps {
@@ -96,7 +96,7 @@ pipeline {
             stages {
                 stage("notification-email") {
                     when {
-                        changeset pattern: "/notification-email/*"
+                        changeset pattern: "notification-email/*"
                         beforeAgent true
                     }
                     steps {
@@ -108,7 +108,7 @@ pipeline {
                 }
                 stage("notification-sms") {
                     when {
-                        changeset pattern: "/notification-sms/*"
+                        changeset pattern: "notification-sms/*"
                         beforeAgent true
                     }
                     steps {
@@ -120,7 +120,7 @@ pipeline {
                 }
                 stage("notification") {
                     when {
-                        changeset pattern: "/notification/*"
+                        changeset pattern: "notification/*"
                         beforeAgent true
                     }
                     steps {
@@ -132,7 +132,7 @@ pipeline {
                 }
                 stage("clients") {
                     when {
-                        changeset pattern: "/clients/*"
+                        changeset pattern: "clients/*"
                         beforeAgent true
                     }
                     steps {
@@ -144,7 +144,7 @@ pipeline {
                 }
                 stage("eureka-server") {
                     when {
-                        changeset pattern: "/eureka-server/*"
+                        changeset pattern: "eureka-server/*"
                         beforeAgent true
                     }
                     steps {
@@ -165,7 +165,7 @@ pipeline {
             stages {
                 stage("notification-email") {
                     when {
-                        changeset pattern: "/notification-email/*"
+                        changeset pattern: "notification-email/*"
                         beforeAgent true
                     }
                     steps {
@@ -177,7 +177,7 @@ pipeline {
                 }
                 stage("notification-sms") {
                     when {
-                        changeset pattern: "/notification-sms/*"
+                        changeset pattern: "notification-sms/*"
                         beforeAgent true
                     }
                     steps {
@@ -189,7 +189,7 @@ pipeline {
                 }
                 stage("notification") {
                     when {
-                        changeset pattern: "/notification/*"
+                        changeset pattern: "notification/*"
                         beforeAgent true
                     }
                     steps {
@@ -201,7 +201,7 @@ pipeline {
                 }
                 stage("eureka-server") {
                     when {
-                        changeset pattern: "/eureka-server/*"
+                        changeset pattern: "eureka-server/*"
                         beforeAgent true
                     }
                     steps {
@@ -218,7 +218,7 @@ pipeline {
             stages {
                 stage("notification-email") {
                     when {
-                        changeset pattern: "/notification-email/*"
+                        changeset pattern: "notification-email/*"
                         beforeAgent true
                     }
                     steps {
@@ -230,7 +230,7 @@ pipeline {
                 }
                 stage("notification-sms") {
                     when {
-                        changeset pattern: "/notification-sms/*"
+                        changeset pattern: "notification-sms/*"
                         beforeAgent true
                     }
                     steps {
@@ -242,7 +242,7 @@ pipeline {
                 }
                 stage("notification") {
                     when {
-                        changeset pattern: "/notification/*"
+                        changeset pattern: "notification/*"
                         beforeAgent true
                     }
                     steps {
@@ -254,7 +254,7 @@ pipeline {
                 }
                 stage("eureka-server") {
                     when {
-                        changeset pattern: "/eureka-server/*"
+                        changeset pattern: "eureka-server/*"
                         beforeAgent true
                     }
                     steps {
