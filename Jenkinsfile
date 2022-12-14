@@ -277,3 +277,7 @@ pipeline {
         }
     }
 }
+
+node () {
+    echo currentBuild.changeSets
+}
