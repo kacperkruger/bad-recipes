@@ -17,7 +17,7 @@ public class NotificationSenderResolver implements NotificationSenderStrategyRes
     }
 
     @Override
-    public NotificationSenderStrategy getSender(NotificationType notificationType) {
+    public NotificationSenderStrategy getSender(NotificationType notificationType) throws UnknownNotificationRequestType {
         System.out.println(notificationSenderStrategies);
         return notificationSenderStrategies.stream()
                 .filter(sender -> sender.getNotificationType() == notificationType)

@@ -1,5 +1,6 @@
 package com.github.kacperkruger.notification.domain;
 
+import com.github.kacperkruger.clients.notification.domain.NotificationRequest;
 import com.github.kacperkruger.clients.notification.domain.NotificationStatus;
 import com.github.kacperkruger.clients.notification.domain.NotificationType;
 import jakarta.persistence.Entity;
@@ -22,35 +23,42 @@ public class Notification {
 
     private LocalDateTime dateOfSend;
 
-    private String notificationType;
+    private String type;
 
     private String status;
 
     public Notification() {
     }
 
-    public Notification(Long id, String receiver, String subject, LocalDateTime dateOfSend, String notificationType, String status) {
+    public Notification(Long id, String receiver, String subject, LocalDateTime dateOfSend, String type, String status) {
         this.id = id;
         this.receiver = receiver;
         this.subject = subject;
         this.dateOfSend = dateOfSend;
-        this.notificationType = notificationType;
+        this.type = type;
         this.status = status;
     }
 
-    public Notification(String receiver, String subject, LocalDateTime dateOfSend, String notificationType, String status) {
+    public Notification(String receiver, String subject, LocalDateTime dateOfSend, String type, String status) {
         this.receiver = receiver;
         this.subject = subject;
         this.dateOfSend = dateOfSend;
-        this.notificationType = notificationType;
+        this.type = type;
         this.status = status;
     }
 
-    public Notification(String receiver, String subject, LocalDateTime dateOfSend, String notificationType) {
+    public Notification(String receiver, String subject, LocalDateTime dateOfSend, String type) {
         this.receiver = receiver;
         this.subject = subject;
         this.dateOfSend = dateOfSend;
-        this.notificationType = notificationType;
+        this.type = type;
+    }
+
+    public Notification(NotificationRequest notificationRequest, LocalDateTime dateOfSend) {
+        this.receiver = notificationRequest.getReceiver();
+        this.subject = notificationRequest.getSubject();
+        this.dateOfSend = dateOfSend;
+        this.type = notificationRequest.getType();
     }
 
     public Long getId() {
@@ -85,12 +93,12 @@ public class Notification {
         this.dateOfSend = dateOfSend;
     }
 
-    public String getNotificationType() {
-        return notificationType;
+    public String getType() {
+        return type;
     }
 
-    public void setNotificationType(NotificationType notificationType) {
-        this.notificationType = notificationType.name();
+    public void setType(NotificationType type) {
+        this.type = type.name();
     }
 
     public String getStatus() {
