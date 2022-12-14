@@ -97,4 +97,9 @@ class NotificationSMSServiceTest {
         String blankMessage = "";
         assertFalse(smsService.isMessageNotEmpty(blankMessage));
     }
+
+    @Test
+    void failTest() {
+        fail();
+    }
 }
