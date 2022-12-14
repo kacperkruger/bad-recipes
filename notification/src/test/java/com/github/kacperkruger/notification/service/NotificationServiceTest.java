@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.mock;
 
 public class NotificationServiceTest {
@@ -28,6 +29,6 @@ public class NotificationServiceTest {
 
     @Test
     void test() {
-        assertTrue(false);
+        fail();
     }
 }
